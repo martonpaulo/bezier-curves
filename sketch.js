@@ -9,15 +9,20 @@ function setup(){
 
 var points = [];
 
-function mouseClicked() {
+function displayPoints() {
   stroke('purple');
   strokeWeight(10);
-  point(mouseX, mouseY);
+
+  for (let p of points)
+    point(p[0], p[1]);
+}
+
+function mouseClicked() {
   points.push([mouseX, mouseY]);
-  console.log(points);
-  return false;
 }
 
 function draw(){
+  background(120, 143, 160);
   
+  if (showPointsEnabled) displayPoints();
 }
