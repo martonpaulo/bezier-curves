@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&display=swap');
+
+:root {
+	--color-background: #F5EBE4;
+  --color-text-base: #3D3C3C;
+  --color-container: #FFFFFF;
+  --color-selected-button: #EC904C;
+  --color-button: #666666;
+}
+
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+
+html, body, #root {
+	height: 100vh;
+}
+
+body {
+	background: var(--color-background);
+}
+
+#root {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+body,
+input,
+button,
+textarea {
+  font-family: Lato, sans-serif;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  width: 100%;
+  height: 15%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 90%;
+  height: 70%;
+  background-color: var(--color-container);
+
+  border-radius: 10px;
+
+  display: flex;
+}
+
+.options {
+  background-color: blue;
+
+  height: 100%;
+  width: 20%;
+}
+
+#canvas-container {
+  height: 100%;
+  width: 80%;
+
+  cursor: pointer;
+}
+
+footer {
+  height: 15%;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 2rem;
+}
+
+h1 {
+  color: var(--color-text-base);
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+p {
+  color: var(--color-text-base);
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
+a, a:hover, a:focus, a:active {
+  color: inherit;
+}
+
+button {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  border: none;
+
+  cursor: pointer;
+  background-color: var(--color-button);
+  color: var(--color-text-base);
+}
+
+button:hover {
+  background-color: var(--color-selected-button);
+}
+
+.button-container:hover p {
+  color: var(--color-selected-button);
+}
+
+.button-description p {
+  color: black;
+}
+
+@media (min-width: 700px) {
+	.title {
+    height: 20%;
+  }
+  
+  h1 {
+    font-size: 3rem;
+  }
+  
+  .container {
+    width: 80%;
+  }
+}
