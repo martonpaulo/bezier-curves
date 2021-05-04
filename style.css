@@ -70,6 +70,8 @@ header {
 
   display: flex;
   flex-direction: row;
+
+  overflow-x: scroll;
 }
 
 .container {
@@ -118,7 +120,7 @@ a, a:hover, a:focus, a:active {
 }
 
 .button-container {
-  width: 5rem;
+  min-width: 5rem;
   margin-bottom: 15px;
 
   display: flex;
@@ -177,6 +179,9 @@ input {
 
     flex-direction: column;
     align-items: center;
+    flex-wrap: wrap;
+
+    overflow-x: hidden;
   }
   
   .container {
