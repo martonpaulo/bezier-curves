@@ -52,10 +52,25 @@ function draw() {
   if (createNewEnabled || current) {
     if (showPointsEnabled) showPoints();
     if (showLinesEnabled) showLines();
+    // A partir de três pontos, computamos deCasteljau
     if (points[0].length>2){
       if (showLinesEnabled) showCurves();
     }
   }
+}
+
+function drawArrow(base, vec, myColor) {
+  push();
+  stroke(myColor);
+  strokeWeight(3);
+  fill(myColor);
+  translate(base.x, base.y);
+  line(0, 0, vec.x, vec.y);
+  rotate(vec.heading());
+  let arrowSize = 7;
+  translate(vec.mag() - arrowSize, 0);
+  triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
+  pop();
 }
 
 function showPoints() {
@@ -74,36 +89,42 @@ function showLines() {
       line(points[i][j].x, points[i][j].y,
           points[i][j + 1].x, points[i][j + 1].y);
 }
+
+// Essa função desenha uma linha
 function drawLine(x,y,cor){
   stroke(cor);
   strokeWeight(1);
   line(x[0],x[1],y[0],y[1]);
 }
+
+// Essa função computa o algoritmo de decasteljau para varios ts e desenha linhas entre eles, depende de deCasteljau para funcionar
 function showCurves() {
   var t = 3;
   var bPoints = [];
   for (var i = 0; i < t; i++) {
-    bPoints[i] = deCasteljau(kapa[0], i / t);
+    //bPoints[i] = deCasteljau(i / t);
   }
   for (var i = 0; i < t - 1; i++) {
-    drawLine(bPoints[i], bPoints[i + 1], "red");  
+    //drawLine(bPoints[i], bPoints[i + 1], "red");  
   }
 }
 
 
-//Desenhar a curva
 
-
-
-function deCasteljau(a ,  t){
-  var q = a;
-  for (var i = 1; i < a.length; i++) {
-    for (var j = 1; j < a.length - i; i++) {
-      q[j].x = (1 - t) * q[j].x + t * q[j + 1].x;
-      q[j].y = (1 - t) * q[j].y + t * q[j + 1].y;
-    }
+// A função fica problemática quando tira os comentários do for, os elementos de points estão sendo referenciados.
+function deCasteljau(n,t){
+  var q = [];
+  for(var i = 0; i < n; i++){
+    q = points[0].slice();
   }
-  var answ;
-  answ = [q[0].x, q[0].y];
-  return answ;
+  console.log(q);
+  // for (var i = 0; i < n; i++) {
+  //   for (var j = 0; j < n - i; i++) {
+  //     q[j].x = (1 - t) * q[j].x + t * q[j + 1].x;
+  //     q[j].y = (1 - t) * q[j].y + t * q[j + 1].y;
+  //   }
+  // }
+  // var answ;
+  // answ = [q[0].x, q[0].y];
+  // return answ;
 }
