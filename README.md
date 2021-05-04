@@ -3,7 +3,7 @@
 
 Web application made with HTML, CSS, JavaScript Vanilla and p5.js for creating Bézier curves.
 
-Click (here)[https://bezier-curves.netlify.app/] to access the application.
+Click [here](https://bezier-curves.netlify.app/) to access the application.
 
 ## About the interface
 - button to create new curve;
