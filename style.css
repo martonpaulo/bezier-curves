@@ -72,14 +72,23 @@ header {
   flex-direction: row;
 }
 
-#canvas-container {
+.container {
   height: 75%;
   width: 100%;
 
   border-radius: 10px;
   background-color: var(--color-container);
 
-  cursor: pointer;
+  padding: 10px;
+}
+
+#canvas-container {
+  height: 100%;
+  width: 100%;
+}
+
+#canvas {
+  cursor: not-allowed;
 }
 
 footer {
@@ -137,6 +146,18 @@ button:hover {
   background-color: var(--color-selected-button);
 }
 
+#create-new button {
+  background-color: var(--color-selected-button);
+}
+
+label {
+  color: var(--color-text-base);
+}
+
+input {
+  width: 3rem;
+}
+
 @media (min-width: 700px) {
 	.options-and-canvas {
     width: 80%;
@@ -159,7 +180,7 @@ button:hover {
     align-items: center;
   }
   
-  #canvas-container {
+  .container {
     height: 100%;
     width: calc(100% - 4rem);
   }

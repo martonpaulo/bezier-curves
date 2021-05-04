@@ -54,6 +54,10 @@ function addButton(id, text, icon, func) {
 function createNew() {
   createNewEnabled = true;
   displayButtons();
+  resizeCanvasElement();
+
+  let cnv = document.getElementById('canvas');
+  cnv.style.cursor = "crosshair";
 }
 
 function clearAll() {
@@ -82,4 +86,7 @@ function done() {
   displayButtons();
   current++;
   points[current] = [];
+
+  let cnv = document.getElementById('canvas');
+  cnv.style.cursor = "pointer";
 }

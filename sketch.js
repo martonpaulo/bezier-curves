@@ -1,11 +1,10 @@
-function setup() {
-  sketchWidth = document.getElementById('canvas-container').offsetWidth;
-  sketchHeight = document.getElementById('canvas-container').offsetHeight;
+let points = [[]];
+let current = 0;
+let t = 100;
+let padding = 0;
 
-  let cnv = createCanvas(sketchWidth-2, sketchHeight+10);
-  cnv.id('canvas');
-  cnv.parent('canvas-container');
-}
+let sketchWidth = 0;
+let sketchHeight = 0;
 
 class Point {
   constructor(x, y) {
@@ -14,13 +13,34 @@ class Point {
   }
 }
 
-let points = [[]];
-let current = 0;
-let t = 100;
+function resizeCanvasElement() {
+  sketchWidth = document.getElementById('canvas-container').offsetWidth;
+  sketchHeight = document.getElementById('canvas-container').offsetHeight;
+  resizeCanvas(sketchWidth, sketchHeight);
+}
+
+function setup() {
+  sketchWidth = document.getElementById('canvas-container').offsetWidth;
+  sketchHeight = document.getElementById('canvas-container').offsetHeight;
+
+  let cnv = createCanvas(sketchWidth, sketchHeight);
+  cnv.id('canvas');
+  cnv.parent('canvas-container');
+}
+
+function windowResized() {
+  resizeCanvasElement();
+}
 
 function mouseClicked() {
-  if (createNewEnabled)
-    points[current].push(new Point(mouseX, mouseY));
+  if (mouseX > padding &&
+      mouseY > padding &&
+      mouseX < sketchWidth - padding &&
+      mouseY < sketchHeight - padding )
+  {
+    if (createNewEnabled)
+      points[current].push(new Point(mouseX, mouseY));
+  }
 }
 
 function draw() {
@@ -31,6 +51,20 @@ function draw() {
     if (showLinesEnabled) showLines();
     // if (showLinesEnabled) showCurves();
   }
+}
+
+function drawArrow(base, vec, myColor) {
+  push();
+  stroke(myColor);
+  strokeWeight(3);
+  fill(myColor);
+  translate(base.x, base.y);
+  line(0, 0, vec.x, vec.y);
+  rotate(vec.heading());
+  let arrowSize = 7;
+  translate(vec.mag() - arrowSize, 0);
+  triangle(0, arrowSize / 2, 0, -arrowSize / 2, arrowSize, 0);
+  pop();
 }
 
 function showPoints() {
@@ -57,4 +91,7 @@ function showCurves() {
   // strokeWeight(2);
   // for (let i = 0; i < t - 1; i++)
   //   line(bPoints[i][0], bPoints[i][1], bPoints[i + 1][0], bPoints[i + 1][1]);
+
+  // RANDOM COLOR
+  // color = color(random(0, 255), random(100, 200), random(0, 100));
 }
