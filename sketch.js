@@ -40,16 +40,21 @@ function mouseClicked() {
   {
     if (createNewEnabled)
       points[current].push(new Point(mouseX, mouseY));
+      console.log(points);
   }
 }
-
+var kapa = [[Point]]
+  kapa[0].push(new Point(11,22));
+  kapa[0].push(new Point(31,2));
+  kapa[0].push(new Point(61,62));
 function draw() {
   background('#F3F3F1');
-
   if (createNewEnabled || current) {
     if (showPointsEnabled) showPoints();
     if (showLinesEnabled) showLines();
-    // if (showLinesEnabled) showCurves();
+    if (points[0].length>2){
+      if (showLinesEnabled) showCurves();
+    }
   }
 }
 
@@ -83,15 +88,36 @@ function showLines() {
       line(points[i][j].x, points[i][j].y,
           points[i][j + 1].x, points[i][j + 1].y);
 }
-
+function drawLine(x,y,cor){
+  stroke(cor);
+  strokeWeight(1);
+  line(x[0],x[1],y[0],y[1]);
+}
 function showCurves() {
-  // let bPoints = [];
+  var t = 3;
+  var bPoints = [];
+  for (var i = 0; i < t; i++) {
+    bPoints[i] = deCasteljau(kapa[0], i / t);
+  }
+  for (var i = 0; i < t - 1; i++) {
+    drawLine(bPoints[i], bPoints[i + 1], "red");  
+  }
+}
 
-  // stroke('#EC904C');
-  // strokeWeight(2);
-  // for (let i = 0; i < t - 1; i++)
-  //   line(bPoints[i][0], bPoints[i][1], bPoints[i + 1][0], bPoints[i + 1][1]);
 
-  // RANDOM COLOR
-  // color = color(random(0, 255), random(100, 200), random(0, 100));
+//Desenhar a curva
+
+
+
+function deCasteljau(a ,  t){
+  var q = a;
+  for (var i = 1; i < a.length; i++) {
+    for (var j = 1; j < a.length - i; i++) {
+      q[j].x = (1 - t) * q[j].x + t * q[j + 1].x;
+      q[j].y = (1 - t) * q[j].y + t * q[j + 1].y;
+    }
+  }
+  var answ;
+  answ = [q[0].x, q[0].y];
+  return answ;
 }
