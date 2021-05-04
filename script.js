@@ -27,24 +27,16 @@ function addButton(id, text, icon, func, checked) {
   buttonContainer.setAttribute('class', 'button-container');
   buttonContainer.setAttribute('id', id);
 
-  if (checked) { 
-    buttonContainer.innerHTML = `
-      <button onclick="${func}" class="checked">
-        <i class="${icon}"></i>
-      </button>
-      <div class="button-description">
-        <p>${text}</p>
-    `;
+  const buttonClass = checked ? 'checked' : 'not-checked';
 
-  } else {
-    buttonContainer.innerHTML = `
-      <button onclick="${func}">
-        <i class="${icon}"></i>
-      </button>
-      <div class="button-description">
-        <p>${text}</p>
-    `;
-  }
+  buttonContainer.innerHTML = `
+    <button onclick="${func}" class="${buttonClass}">
+      <i class="${icon}"></i>
+    </button>
+    <div class="button-description">
+      <p>${text}</p>
+    </div>
+  `;
 
   options.appendChild(buttonContainer);
 }
@@ -55,19 +47,22 @@ function createNew() {
 }
 
 function clearAll() {
-
+  displayButtons();
 }
 
 function showPoints() {
   showPointsEnabled = !showPointsEnabled;
+  displayButtons();
 }
 
 function showLines() {
   showLinesEnabled = !showLinesEnabled;
+  displayButtons();
 }
 
 function showCurves() {
   showCurvesEnabled = !showCurvesEnabled;
+  displayButtons();
 }
 
 function done() {

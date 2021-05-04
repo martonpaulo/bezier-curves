@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700&display=swap');
 
 :root {
-	--color-background: #F5EBE4;
-  --color-text-base: #3D3C3C;
-  --color-container: #FFFFFF;
-  --color-selected-button: #EC904C;
+	--color-background: #3D3C3C;
+  --color-container: #F3F3F1;
+
+  --color-text-base: #FFFFFF;
+
   --color-button: #666666;
+  --color-selected-button: #EC904C;
 }
 
 * {
@@ -35,7 +37,7 @@ textarea {
   font-family: Lato, sans-serif;
 }
 
-.wrapper {
+main {
   width: 100%;
   height: 100%;
 
@@ -45,41 +47,43 @@ textarea {
   justify-content: center;
 }
 
-.title {
+header {
   width: 100%;
-  height: 15%;
+  height: 20%;
 
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.container {
+.options-and-canvas {
   width: 90%;
   height: 70%;
-  background-color: var(--color-container);
-
-  border-radius: 10px;
 
   display: flex;
+  flex-direction: column-reverse;
 }
 
 .options {
-  background-color: blue;
+  height: 25%;
+  width: 100%;
 
-  height: 100%;
-  width: 20%;
+  display: flex;
+  flex-direction: row;
 }
 
 #canvas-container {
-  height: 100%;
-  width: 80%;
+  height: 75%;
+  width: 100%;
+
+  border-radius: 10px;
+  background-color: var(--color-container);
 
   cursor: pointer;
 }
 
 footer {
-  height: 15%;
+  height: 10%;
   width: 100%;
 
   display: flex;
@@ -104,6 +108,20 @@ a, a:hover, a:focus, a:active {
   color: inherit;
 }
 
+.button-container {
+  width: 5rem;
+  margin-bottom: 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-description {
+  padding-top: 5px;
+}
+
 button {
   height: 3rem;
   width: 3rem;
@@ -113,12 +131,11 @@ button {
   cursor: pointer;
   background-color: var(--color-button);
   color: var(--color-text-base);
+
+  transition: .3s ease all;
 }
 
-button .checked {
-  background-color: var(--color-selected-button);
-}
-
+button.checked, 
 button:hover {
   background-color: var(--color-selected-button);
 }
@@ -127,20 +144,31 @@ button:hover {
   color: var(--color-selected-button);
 }
 
-.button-description p {
-  color: black;
-}
-
 @media (min-width: 700px) {
-	.title {
-    height: 20%;
+	.options-and-canvas {
+    width: 80%;
   }
   
   h1 {
     font-size: 3rem;
   }
-  
-  .container {
-    width: 80%;
+
+  .options-and-canvas {
+    flex-direction: row;
   }
+  
+  .options {
+    height: 100%;
+    width: 8rem;
+    margin-left: -4rem;
+
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #canvas-container {
+    height: 100%;
+    width: calc(100% - 4rem);
+  }
+  
 }
