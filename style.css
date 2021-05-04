@@ -131,17 +131,10 @@ button {
   cursor: pointer;
   background-color: var(--color-button);
   color: var(--color-text-base);
-
-  transition: .3s ease all;
 }
 
-button.checked, 
 button:hover {
   background-color: var(--color-selected-button);
-}
-
-.button-container:hover p {
-  color: var(--color-selected-button);
 }
 
 @media (min-width: 700px) {

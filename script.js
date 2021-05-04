@@ -12,25 +12,35 @@ function displayButtons() {
   options.innerHTML = '';
 
   if (!createNewEnabled)
-    addButton('create-new', 'Create new', 'fas fa-plus', 'createNew()', false);
+    addButton('create-new', 'Create new', 'fas fa-plus', 'createNew()');
   else
-    addButton('done', 'Done', 'fas fa-check', 'done()', false);
+    addButton('done', 'Done', 'fas fa-check', 'done()');
 
-  addButton('clear-all', 'Clear all', 'fas fa-redo', 'clearAll()', false);
-  addButton('show-points', 'Show points', 'fas fa-circle', 'showPoints()', showPointsEnabled);
-  addButton('show-lines', 'Show lines', 'fas fa-grip-lines', 'showLines()', showLinesEnabled);
-  addButton('show-curves', 'Show curves', 'fab fa-confluence', 'showCurves()', showCurvesEnabled);
+  addButton('clear-all', 'Clear all', 'fas fa-redo', 'clearAll()');
+
+  if (!showPointsEnabled)
+    addButton('show-points', 'Show points', 'fas fa-circle', 'toggleShowPoints()');
+  else
+    addButton('show-points', 'Hide points', 'fas fa-circle', 'toggleShowPoints()');
+
+  if (!showLinesEnabled)
+    addButton('show-lines', 'Show lines', 'fas fa-grip-lines', 'toggleShowLines()');
+  else
+    addButton('show-lines', 'Hide lines', 'fas fa-grip-lines', 'toggleShowLines()');
+
+  if (!showCurvesEnabled)
+    addButton('show-curves', 'Show curves', 'fab fa-confluence', 'toggleShowCurves()');
+  else
+    addButton('show-curves', 'Hide curves', 'fab fa-confluence', 'toggleShowCurves()');  
 }
 
-function addButton(id, text, icon, func, checked) {
+function addButton(id, text, icon, func) {
   const buttonContainer = document.createElement('div');
   buttonContainer.setAttribute('class', 'button-container');
   buttonContainer.setAttribute('id', id);
 
-  const buttonClass = checked ? 'checked' : 'not-checked';
-
   buttonContainer.innerHTML = `
-    <button onclick="${func}" class="${buttonClass}">
+    <button onclick="${func}">
       <i class="${icon}"></i>
     </button>
     <div class="button-description">
@@ -47,20 +57,22 @@ function createNew() {
 }
 
 function clearAll() {
+  points = [[]];
+  current = 0;
   displayButtons();
 }
 
-function showPoints() {
+function toggleShowPoints() {
   showPointsEnabled = !showPointsEnabled;
   displayButtons();
 }
 
-function showLines() {
+function toggleShowLines() {
   showLinesEnabled = !showLinesEnabled;
   displayButtons();
 }
 
-function showCurves() {
+function toggleShowCurves() {
   showCurvesEnabled = !showCurvesEnabled;
   displayButtons();
 }
@@ -68,4 +80,6 @@ function showCurves() {
 function done() {
   createNewEnabled = false;
   displayButtons();
+  current++;
+  points[current] = [];
 }
