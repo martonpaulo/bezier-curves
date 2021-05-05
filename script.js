@@ -64,7 +64,7 @@ function createNew() {
   cnv.style.cursor = "crosshair";
 
   if (!firstAction) {
-    resizeCanvasElement();
+    windowResized();
     firstAction = true;
   }
 }
