@@ -84,14 +84,14 @@ function displayButtons() {
   side = 'right';
 
   // EVALUATION
-  text = 'Evaluation value';
+  text = 'Eval number';
   icon = '';
   func = '';
   addButton(text, icon, func, side);
 
   // SELECT NEXT CURVE
   if (!createNewEnabled && points.length > 2 && !addPointsEnabled) {
-    text = 'Select next curve';
+    text = 'Select next';
     icon = 'far fa-forward';
     func = 'selectNextCurve()';
     addButton(text, icon, func, side);
@@ -104,7 +104,7 @@ function displayButtons() {
       icon = 'far fa-plus-circle';
       func = 'addPoints()';
     } else {
-      text = 'Done adding points';
+      text = 'Done adding';
       icon = 'far fa-check';
       func = 'doneAddingPoints()';
     }
@@ -127,7 +127,7 @@ function addButton(text, icon, func, side, checked = false) {
   if (text == 'Create new' || text == 'Done')
     buttonContainer.setAttribute('id', 'first-button');
   
-  if (text == 'Done adding points')
+  if (text == 'Done adding')
     buttonContainer.setAttribute('id', 'done-adding-points');
 
   if (text == 'Done' && !(userMadeTheFirstAction && points[current].length > 0))
@@ -178,6 +178,16 @@ function createNew() {
 function clearAll() {
   points = [[]];
   current = 0;
+
+  createNewEnabled = false;
+  showPointsEnabled = true;
+  showLinesEnabled = true;
+  showCurvesEnabled = true;
+  addPointsEnabled = false;
+
+  firstButtonActive = true;
+  
+  userCreatedTheFirstCurve = false;
 }
 
 function toggleShowPoints() {

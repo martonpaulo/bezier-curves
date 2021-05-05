@@ -1,8 +1,9 @@
 let points = [[]];
 let current = 0;
-let t = 100;
-let padding = 0;
 
+let t = 100;
+
+let padding = 0;
 let sketchWidth = 0;
 let sketchHeight = 0;
 
