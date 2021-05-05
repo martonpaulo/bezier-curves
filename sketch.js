@@ -86,7 +86,6 @@ function drawLine(x, y, color) {
 
 // Essa função computa o algoritmo de De Casteljau para vários Ts e desenha linhas entre eles, depende de De Casteljau para funcionar
 function showCurves() {
-  let t = 2;  
   let bPoints = [];
   let color;
 
