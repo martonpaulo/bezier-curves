@@ -1,9 +1,8 @@
 let points = [[]];
 let current = 0;
-
 let t = 100;
-
 let padding = 0;
+
 let sketchWidth = 0;
 let sketchHeight = 0;
 
@@ -87,7 +86,7 @@ function drawLine(x, y, color) {
 
 // Essa função computa o algoritmo de De Casteljau para vários Ts e desenha linhas entre eles, depende de De Casteljau para funcionar
 function showCurves() {
-  let t = 100;  
+  let t = 2;  
   let bPoints = [];
   let color;
 
@@ -96,11 +95,8 @@ function showCurves() {
       if (k == current) color = 'red';
       else color = 'gray'
       //Computando os pontos de controle
-      for (let i = 0; i < t ; i++)
+      for (let i = 0; i <= t ; i++)
         bPoints[i] = deCasteljau(k, i / t);
-      //Adicionando o último ponto de controle ao desenho da curva
-      var aux =  points[k].map((point) => ({ ...point }));
-      bPoints.push([aux[aux.length-1].x , aux[aux.length-1].y]);
       //Desenhando a curva
       for (let i = 0; i < t ; i++)
         drawLine(bPoints[i], bPoints[i + 1], color);
