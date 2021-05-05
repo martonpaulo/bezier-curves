@@ -1,51 +1,147 @@
-const options = document.querySelector('.options');
+const leftOptions = document.querySelector('.left-options');
+const rightOptions = document.querySelector('.right-options');
+
 let createNewEnabled = false;
 let showPointsEnabled = true;
 let showLinesEnabled = true;
 let showCurvesEnabled = true;
+let addPointsEnabled = false;
 
-let firstAction = false;
+let firstButtonActive = true;
 
-displayButtons();
+let userMadeTheFirstAction = false;
+let userCreatedTheFirstCurve = false;
 
-
-function displayButtons() {
-  // remove old buttons
-  options.innerHTML = '';
-
-  if (!createNewEnabled)
-    addButton('create-new', 'Create new', 'far fa-plus', 'createNew()');
-  else
-    addButton('done', 'Done', 'far fa-check', 'done()');
-
-  addButton('clear-all', 'Clear all', 'far fa-redo', 'clearAll()');
-
-  if (!showPointsEnabled)
-    addButton('show-points', 'Show points', 'far fa-circle', 'toggleShowPoints()');
-  else
-    addButton('show-points', 'Hide points', 'far fa-circle', 'toggleShowPoints()', true);
-
-  if (!showLinesEnabled)
-    addButton('show-lines', 'Show lines', 'far fa-horizontal-rule', 'toggleShowLines()');
-  else
-    addButton('show-lines', 'Hide lines', 'far fa-horizontal-rule', 'toggleShowLines()', true);
-
-  if (!showCurvesEnabled)
-    addButton('show-curves', 'Show curves', 'far fa-wave-sine', 'toggleShowCurves()');
-  else
-    addButton('show-curves', 'Hide curves', 'far fa-wave-sine', 'toggleShowCurves()', true);  
+function start() {
+  displayButtons();
 }
 
-function addButton(id, text, icon, func, checked = false) {
+function displayButtons() {
+  let text, icon, func, checked, side;
+  
+  // remove old buttons
+  leftOptions.innerHTML = '';
+  rightOptions.innerHTML = '';
+
+  // LEFT SIDE
+  side = 'left';
+
+  // CREATE NEW
+  if (!createNewEnabled) {
+    text = 'Create new';
+    icon = 'far fa-plus';
+    func = 'createNew()';
+  } else {
+    text = 'Done';
+    icon = 'far fa-check';
+    func = 'done()';
+  }
+  addButton(text, icon, func, side);
+
+  // CLEAR ALL
+  text = 'Clear all';
+  icon = 'far fa-redo';
+  func = 'clearAll()';
+  addButton(text, icon, func, side);
+
+  // SHOW POINTS
+  icon = 'far fa-circle';
+  func = 'toggleShowPoints()';
+  if (!showPointsEnabled) {
+    text = 'Show points';
+    checked = false;
+  } else {
+    text = 'Hide points';
+    checked = true;
+  }
+  addButton(text, icon, func, side, checked);
+
+  // SHOW LINES
+  icon = 'far fa-horizontal-rule';
+  func = 'toggleShowLines()';
+  if (!showLinesEnabled) {
+    text = 'Show lines';
+    checked = false;
+  } else {
+    text = 'Hide lines';
+    checked = true;
+  }
+  addButton(text, icon, func, side, checked);
+
+  // SHOW CURVES
+  icon = 'far fa-wave-sine';
+  func = 'toggleShowCurves()';
+  if (!showCurvesEnabled) {
+    text = 'Show curves';
+    checked = false;
+  } else {
+    text = 'Hide curves';
+    checked = true;
+  }
+  addButton(text, icon, func, side, checked);
+
+  // RIGHT SIDE
+  side = 'right';
+
+  // EVALUATION
+  text = 'Evaluation value';
+  icon = '';
+  func = '';
+  addButton(text, icon, func, side);
+
+  // SELECT NEXT CURVE
+  if (!createNewEnabled && points.length > 2 && !addPointsEnabled) {
+    text = 'Select next curve';
+    icon = 'far fa-forward';
+    func = 'selectNextCurve()';
+    addButton(text, icon, func, side);
+  }
+
+  // ADD POINTS
+  if (!createNewEnabled && userMadeTheFirstAction && points.length > 1) {
+    if (!addPointsEnabled) {
+      text = 'Add points';
+      icon = 'far fa-plus-circle';
+      func = 'addPoints()';
+    } else {
+      text = 'Done adding points';
+      icon = 'far fa-check';
+      func = 'doneAddingPoints()';
+    }
+    addButton(text, icon, func, side);
+  }
+
+  // DELETE CURVE
+  if (!createNewEnabled && userMadeTheFirstAction && points.length > 1 && !addPointsEnabled) {
+    text = 'Delete curve';
+    icon = 'far fa-trash';
+    func = 'deleteCurve()';
+    addButton(text, icon, func, side);
+  }
+}
+
+function addButton(text, icon, func, side, checked = false) {
   const buttonContainer = document.createElement('div');
   buttonContainer.setAttribute('class', 'button-container');
-  buttonContainer.setAttribute('id', id);
+
+  if (text == 'Create new' || text == 'Done')
+    buttonContainer.setAttribute('id', 'first-button');
+  
+  if (text == 'Done adding points')
+    buttonContainer.setAttribute('id', 'done-adding-points');
+
+  if ((text == 'Done' && (!(userMadeTheFirstAction && points[current].length > 0) || addPointsEnabled)))
+    firstButtonActive = false;
+  else
+    firstButtonActive = true;
+
+  let disabledParameter = firstButtonActive ? '' : 'disabled';
 
   const toHide = checked ? '<i class="far fa-slash" style="font-size: 150%"></i>' : '';
 
   buttonContainer.innerHTML = `
-    <button onclick="${func}" style="position: relative">
-      <i class="${icon}" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
+    <button onclick="${func}" class="button-onclick" ${disabledParameter}>
+      <i class="${icon} i-icon"></i>
       ${toHide}
     </button>
     <div class="button-description">
@@ -53,49 +149,76 @@ function addButton(id, text, icon, func, checked = false) {
     </div>
   `;
 
-  options.appendChild(buttonContainer);
+  if (side == 'left')
+    leftOptions.appendChild(buttonContainer);
+  else
+    rightOptions.appendChild(buttonContainer);
 }
 
 function createNew() {
   createNewEnabled = true;
-  displayButtons();
   
   let cnv = document.getElementById('canvas');
   cnv.style.cursor = "crosshair";
 
-  if (!firstAction) {
+  if (!userMadeTheFirstAction) {
     windowResized();
-    firstAction = true;
+    userMadeTheFirstAction = true;
   }
+
+  if (userCreatedTheFirstCurve)
+    current = points.length - 1;
 }
 
 function clearAll() {
   points = [[]];
   current = 0;
-  displayButtons();
 }
 
 function toggleShowPoints() {
   showPointsEnabled = !showPointsEnabled;
-  displayButtons();
 }
 
 function toggleShowLines() {
   showLinesEnabled = !showLinesEnabled;
-  displayButtons();
 }
 
 function toggleShowCurves() {
   showCurvesEnabled = !showCurvesEnabled;
-  displayButtons();
 }
 
 function done() {
+  if (userMadeTheFirstAction && points[current].length > 1) {
+    createNewEnabled = false;
+    points[points.length] = [];
+
+    userCreatedTheFirstCurve = true;
+
+    let cnv = document.getElementById('canvas');
+    cnv.style.cursor = "pointer";
+  }
+}
+
+function selectNextCurve() {
+  current = (current + 1) % (points.length - 1);
+}
+
+function addPoints() {
+  addPointsEnabled = true;
+  
+  let cnv = document.getElementById('canvas');
+  cnv.style.cursor = "crosshair";
+}
+
+function doneAddingPoints() {
+  addPointsEnabled = false;
   createNewEnabled = false;
-  displayButtons();
-  current++;
-  points[current] = [];
 
   let cnv = document.getElementById('canvas');
   cnv.style.cursor = "pointer";
+}
+
+function deleteCurve() {
+  points.splice(current, 1);
+  selectNextCurve();
 }

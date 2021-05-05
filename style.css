@@ -7,6 +7,7 @@
   --color-text-base: #FFFFFF;
 
   --color-button: #666666;
+  --color-disabled-button: #444444;
   --color-selected-button: #EC904C;
 }
 
@@ -61,15 +62,27 @@ header {
   height: 85%;
 
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
-.options {
+.left-options {
   height: 25%;
   width: 100%;
 
   display: flex;
   flex-direction: row;
+  order: 2;
+
+  overflow-x: scroll;
+}
+
+.right-options {
+  height: 25%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  order: 3;
 
   overflow-x: scroll;
 }
@@ -80,6 +93,8 @@ header {
 
   border-radius: 10px;
   background-color: var(--color-container);
+
+  order: 1;
 
   padding: 10px;
 }
@@ -148,8 +163,25 @@ button:hover {
   background-color: var(--color-selected-button);
 }
 
-#create-new button {
+#first-button button,
+#done-adding-points button {
   background-color: var(--color-selected-button);
+}
+
+#first-button button:disabled {
+  background-color: var(--color-disabled-button);
+  cursor: not-allowed;
+}
+
+.button-onclick {
+  position: relative;
+}
+
+.i-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 label {
@@ -172,7 +204,7 @@ input {
     flex-direction: row;
   }
   
-  .options {
+  .left-options {
     height: 100%;
     width: 8rem;
     margin-left: -4rem;
@@ -180,13 +212,29 @@ input {
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
+    order: 1;
+
+    overflow-x: hidden;
+  }
+
+  .right-options {
+    height: 100%;
+    width: 8rem;
+    margin-right: -4rem;
+
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    order: 3;
 
     overflow-x: hidden;
   }
   
   .container {
     height: 100%;
-    width: calc(100% - 4rem);
+    width: calc(100% - 8rem);
+
+    order: 2;
   }
   
   h1 {

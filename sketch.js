@@ -29,20 +29,27 @@ function windowResized() {
 }
 
 function mouseClicked() {
+  
+  console.log('Current:', current);
+  console.log('Size:', points.length);
+  console.log('');
+
+  displayButtons();
+
   if (
     mouseX > padding &&
     mouseY > padding &&
     mouseX < sketchWidth - padding &&
     mouseY < sketchHeight - padding
   ) {
-    if (createNewEnabled) points[current].push(new Point(mouseX, mouseY));
-    console.log(points);
+    if (createNewEnabled || addPointsEnabled)
+      points[current].push(new Point(mouseX, mouseY));
   }
 }
 
 function draw() {
   background('#F3F3F1');
-  if (createNewEnabled || current) {
+  if (createNewEnabled || userCreatedTheFirstCurve) {
     if (showPointsEnabled) showPoints();
     if (showLinesEnabled) showLines();
     if (showCurvesEnabled) showCurves();
@@ -73,7 +80,7 @@ function showLines() {
 // Essa função desenha uma linha
 function drawLine(x, y, color) {
   stroke(color);
-  strokeWeight(1);
+  strokeWeight(1.5);
   line(x[0], x[1], y[0], y[1]);
 }
 
@@ -81,13 +88,17 @@ function drawLine(x, y, color) {
 function showCurves() {
   let t = 100;
   let bPoints = [];
+  let color;
 
   for (let k = 0; k < points.length; k++) {
     if (points[k].length > 2) {
+      if (k == current) color = 'red';
+      else color = 'gray'
+      
       for (let i = 0; i < t; i++)
         bPoints[i] = deCasteljau(k, i / t);
       for (let i = 0; i < t - 1; i++)
-        drawLine(bPoints[i], bPoints[i + 1], 'red');
+        drawLine(bPoints[i], bPoints[i + 1], color);
     }
   }
 }
