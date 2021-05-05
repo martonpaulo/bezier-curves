@@ -43,19 +43,12 @@ function mouseClicked() {
       console.log(points);
   }
 }
-var kapa = [[Point]]
-  kapa[0].push(new Point(11,22));
-  kapa[0].push(new Point(31,2));
-  kapa[0].push(new Point(61,62));
 function draw() {
   background('#F3F3F1');
   if (createNewEnabled || current) {
     if (showPointsEnabled) showPoints();
     if (showLinesEnabled) showLines();
-    // A partir de três pontos, computamos deCasteljau
-    if (points[0].length>2){
-      if (showLinesEnabled) showCurves();
-    }
+    if (showCurvesEnabled) showCurves();
   }
 }
 
@@ -99,32 +92,36 @@ function drawLine(x,y,cor){
 
 // Essa função computa o algoritmo de decasteljau para varios ts e desenha linhas entre eles, depende de deCasteljau para funcionar
 function showCurves() {
-  var t = 3;
+  var t = 100;
   var bPoints = [];
-  for (var i = 0; i < t; i++) {
-    //bPoints[i] = deCasteljau(i / t);
-  }
-  for (var i = 0; i < t - 1; i++) {
-    //drawLine(bPoints[i], bPoints[i + 1], "red");  
+  for (var k = 0; k < points.length; k++)  {
+    if (points[k].length>2) {
+      for (var i = 0; i < t; i++) {
+        bPoints[i] = deCasteljau(k,i / t);
+      }
+      for (var i = 0; i < t - 1; i++) {
+        drawLine(bPoints[i], bPoints[i + 1], "red");  
+      }
+    }
   }
 }
 
 
 
-// A função fica problemática quando tira os comentários do for, os elementos de points estão sendo referenciados.
-function deCasteljau(n,t){
+// Algoritmo de deCasteljau
+function deCasteljau(k,t){
   var q = [];
-  for(var i = 0; i < n; i++){
-    q = points[0].slice();
+  var n = points[k].length;
+  q = points[k].map(point => ({...point}));
+  //console.log(q);
+  for (var i = 1; i < n; i++) {
+    for (var j = 0; j < n - i; j++) {
+      q[j].x = (1 - t) * q[j].x + t* q[j + 1].x;
+      q[j].y = (1 - t) * q[j].y + t * q[j + 1].y;
+    }
   }
-  console.log(q);
-  // for (var i = 0; i < n; i++) {
-  //   for (var j = 0; j < n - i; i++) {
-  //     q[j].x = (1 - t) * q[j].x + t * q[j + 1].x;
-  //     q[j].y = (1 - t) * q[j].y + t * q[j + 1].y;
-  //   }
-  // }
-  // var answ;
-  // answ = [q[0].x, q[0].y];
-  // return answ;
+  var answ;
+  answ = [q[0].x, q[0].y];
+  //console.log(answ);
+  return answ;
 }
