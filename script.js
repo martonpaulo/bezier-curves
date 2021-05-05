@@ -130,7 +130,12 @@ function addButton(text, icon, func, side, checked = false) {
   if (text == 'Done adding points')
     buttonContainer.setAttribute('id', 'done-adding-points');
 
-  if ((text == 'Done' && (!(userMadeTheFirstAction && points[current].length > 0) || addPointsEnabled)))
+  if (text == 'Done' && !(userMadeTheFirstAction && points[current].length > 0))
+    firstButtonActive = false;
+  else
+    firstButtonActive = true;
+  
+  if ((text == 'Done' || text == 'Create new') && addPointsEnabled)
     firstButtonActive = false;
   else
     firstButtonActive = true;
@@ -212,7 +217,6 @@ function addPoints() {
 
 function doneAddingPoints() {
   addPointsEnabled = false;
-  createNewEnabled = false;
 
   let cnv = document.getElementById('canvas');
   cnv.style.cursor = "pointer";
