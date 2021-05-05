@@ -1,10 +1,13 @@
 let points = [[]];
 let current = 0;
-let t = 100;
 let padding = 0;
+
+let t;
 
 let sketchWidth = 0;
 let sketchHeight = 0;
+
+let started = false;
 
 class Point {
   constructor(x, y) {
@@ -28,11 +31,16 @@ function windowResized() {
   resizeCanvas(sketchWidth, sketchHeight);
 }
 
+function keyPressed() {
+  if (keyCode === 13)
+    getInput();
+}
+
 function mouseClicked() {
   
-  console.log('Current:', current);
-  console.log('Size:', points.length);
-  console.log('');
+  // console.log('Current:', current);
+  // console.log('Size:', points.length);
+  // console.log('');
 
   displayButtons();
 
@@ -53,6 +61,11 @@ function draw() {
     if (showPointsEnabled) showPoints();
     if (showLinesEnabled) showLines();
     if (showCurvesEnabled) showCurves();
+  }
+
+  if (!started) {
+    windowResized();
+    started = true;
   }
 }
 
@@ -91,7 +104,7 @@ function showCurves() {
 
   for (let k = 0; k < points.length; k++) {
     if (points[k].length > 2) {
-      if (k == current) color = 'red';
+      if (k === current) color = 'red';
       else color = 'gray'
       //Computando os pontos de controle
       for (let i = 0; i <= t ; i++)

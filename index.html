@@ -20,13 +20,6 @@
     <header>
       <h1>Bézier Curves</h1>
     </header>
-  
-    <!--
-    <div class="input">
-      <label for="t">Evaluation number:</label>
-      <input type="number" id="t" name="t" value="100">
-    </div>
-    -->
 
     <div class="options-and-canvas">
       <div class="left-options"></div>
@@ -35,7 +28,18 @@
         <div id="canvas-container"></div>
       </div>
 
-      <div class="right-options"></div>
+      <div class="right-options-container">
+
+        <!-- T number -->
+        <div class="input-container">
+          <input type="number" min="1" value="100" id="eval-number">
+          <div class="input-description">
+            <p>Eval number</p>
+          </div>
+        </div>
+
+        <div class="right-options"></div>
+      </div>
     </div>
 
     <footer>

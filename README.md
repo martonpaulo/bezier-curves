@@ -9,7 +9,7 @@ Click [here](https://bezier-curves.netlify.app/) to access the application.
 - [x] button to create new curve;
 - [x] button to delete curve;
 - [x] buttons to switch between existing curves;
-- [ ] field to define the number of evaluation points;
+- [x] field to define the number of evaluation points;
 - [x] buttons to hide / display:
   - [x] control points;
   - [x] control polygonals;
@@ -22,7 +22,7 @@ Click [here](https://bezier-curves.netlify.app/) to access the application.
 ## System requirements
 - [x] the evaluation points are made with the De Casteljau's algorithm;
 - [x] the curves are made by connecting the evaluated points;
-- [ ] the number of curve evaluations is arbitrary (user-specified);
+- [x] the number of curve evaluations is arbitrary (user-specified);
 - [x] the number of curve control points is arbitrary;
 - [x] the system responds to changes in real time;
 - [ ] the system does not display crashes or memory overflow.

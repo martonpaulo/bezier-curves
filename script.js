@@ -83,11 +83,7 @@ function displayButtons() {
   // RIGHT SIDE
   side = 'right';
 
-  // EVALUATION
-  text = 'Eval number';
-  icon = '';
-  func = '';
-  addButton(text, icon, func, side);
+  getInput();
 
   // SELECT NEXT CURVE
   if (!createNewEnabled && points.length > 2 && !addPointsEnabled) {
@@ -124,25 +120,29 @@ function addButton(text, icon, func, side, checked = false) {
   const buttonContainer = document.createElement('div');
   buttonContainer.setAttribute('class', 'button-container');
 
-  if (text == 'Create new' || text == 'Done')
+  // BUTTON ID
+  if (text === 'Create new' || text === 'Done')
     buttonContainer.setAttribute('id', 'first-button');
   
-  if (text == 'Done adding')
+  if (text === 'Done adding')
     buttonContainer.setAttribute('id', 'done-adding-points');
 
-  if (text == 'Done' && !(userMadeTheFirstAction && points[current].length > 0))
+
+  // FIRST BUTTON ENABLED OR DISABLED
+  if (text === 'Done' && !(userMadeTheFirstAction && points[current].length > 0))
     firstButtonActive = false;
   else
     firstButtonActive = true;
   
-  if ((text == 'Done' || text == 'Create new') && addPointsEnabled)
+  if ((text === 'Done' || text === 'Create new') && addPointsEnabled)
     firstButtonActive = false;
   else
     firstButtonActive = true;
 
   let disabledParameter = firstButtonActive ? '' : 'disabled';
 
-  const toHide = checked ? '<i class="far fa-slash" style="font-size: 150%"></i>' : '';
+
+  const toHide = checked ? '<i class="far fa-slash"></i>' : '';
 
   buttonContainer.innerHTML = `
     <button onclick="${func}" class="button-onclick" ${disabledParameter}>
@@ -154,10 +154,21 @@ function addButton(text, icon, func, side, checked = false) {
     </div>
   `;
 
-  if (side == 'left')
+  if (side === 'left')
     leftOptions.appendChild(buttonContainer);
   else
     rightOptions.appendChild(buttonContainer);
+}
+
+function getInput() {
+  let evalNumber = document.getElementById('eval-number').value;
+
+  t = evalNumber;
+
+  if (t < 1) {
+    document.getElementById('eval-number').value = 100;
+    t = 100;
+  }
 }
 
 function createNew() {
@@ -166,10 +177,8 @@ function createNew() {
   let cnv = document.getElementById('canvas');
   cnv.style.cursor = "crosshair";
 
-  if (!userMadeTheFirstAction) {
-    windowResized();
+  if (!userMadeTheFirstAction)
     userMadeTheFirstAction = true;
-  }
 
   if (userCreatedTheFirstCurve)
     current = points.length - 1;
@@ -186,7 +195,7 @@ function clearAll() {
   addPointsEnabled = false;
 
   firstButtonActive = true;
-  
+
   userCreatedTheFirstCurve = false;
 }
 
