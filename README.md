@@ -14,10 +14,10 @@ Click [here](https://bezier-curves.netlify.app/) to access the application.
   - [x] control points;
   - [x] control polygonals;
   - [x] curves
-- [ ] interaction with the curves allowing to: 
+- [x] interaction with the curves allowing to: 
   - [x] insert;
   - [x] modify;
-  - [ ] delete control points.
+  - [x] delete control points.
 
 ## System requirements
 - [x] the evaluation points are made with the De Casteljau's algorithm;
