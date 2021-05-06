@@ -13,6 +13,60 @@ class Point {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.dragging = false; // Is the object being dragged?
+    this.rollover = false; // Is the mouse over the ellipse?
+    this.offsetX = 0;
+    this.offsetY = 0;
+    this.size = 5;
+  }
+
+  over() {
+    // Is mouse over object    
+    if (
+      mouseX > this.x - this.size &&
+      mouseX < this.x + this.size &&
+      mouseY > this.y - this.size &&
+      mouseY < this.y + this.size
+    ) {
+      this.rollover = true;
+
+      if (!createNewEnabled)
+        cursorType('pointer');
+
+    } else {
+      this.rollover = false;
+
+      if (!createNewEnabled)
+        cursorType('default');
+    }
+  }
+
+  update() {
+    // Adjust location if being dragged
+    if (this.dragging) {
+      this.x = mouseX + this.offsetX;
+      this.y = mouseY + this.offsetY;
+    }
+  }
+
+  pressed() {
+    // Did I click on the rectangle?
+    if (
+      mouseX > this.x - this.size &&
+      mouseX < this.x + this.size &&
+      mouseY > this.y - this.size &&
+      mouseY < this.y + this.size
+    ) {
+      this.dragging = true;
+      // If so, keep track of relative location of click to corner of rectangle
+      this.offsetX = this.x - mouseX;
+      this.offsetY = this.y - mouseY;
+    }
+  }
+
+  released() {
+    // Quit dragging
+    this.dragging = false;
   }
 }
 
@@ -67,9 +121,27 @@ function draw() {
 function showPoints() {
   stroke('#EC904C');
   strokeWeight(10);
-  for (let i = 0; i < points.length; i++)
-    for (let p of points[i])
+  for (let i = 0; i < points.length; i++) {
+    for (let p of points[i]) {
       point(p.x, p.y);
+      p.update();
+
+      if (i == current)
+        p.over();
+    }
+  }
+}
+
+function mousePressed() {
+  if (!createNewEnabled && points.length > 1)
+    for (let p of points[current])
+      p.pressed();
+}
+
+function mouseReleased() {
+  if (!createNewEnabled && points.length > 1)
+    for (let p of points[current])
+      p.released();
 }
 
 function showLines() {

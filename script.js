@@ -14,9 +14,20 @@ let firstButtonActive = true;
 let userMadeTheFirstAction = false;
 let userCreatedTheFirstCurve = false;
 
+
+
+
 function start() {
   displayButtons();
 }
+
+function cursorType(style) {
+  let cnv = document.getElementById('canvas');
+  cnv.style.cursor = style;
+}
+
+
+// DISPLAY BUTTONS
 
 function displayButtons() {
   let text, icon, func, checked, side;
@@ -126,6 +137,10 @@ function displayButtons() {
   }
 }
 
+
+
+// ADD BUTTON
+
 function addButton(text, icon, func, side, checked = false) {
   const buttonContainer = document.createElement('div');
   buttonContainer.setAttribute('class', 'button-container');
@@ -165,6 +180,10 @@ function addButton(text, icon, func, side, checked = false) {
     rightOptions.appendChild(buttonContainer);
 }
 
+
+
+// INPUT
+
 function getInput() {
   let evalNumber = document.getElementById('eval-number').value;
 
@@ -176,11 +195,14 @@ function getInput() {
   }
 }
 
+
+
+// BUTTONS FUNCTIONS
+
 function createNew() {
   createNewEnabled = true;
   
-  let cnv = document.getElementById('canvas');
-  cnv.style.cursor = "crosshair";
+  cursorType('crosshair');
 
   if (!userMadeTheFirstAction)
     userMadeTheFirstAction = true;
@@ -224,9 +246,6 @@ function done() {
     points[points.length] = [];
 
     userCreatedTheFirstCurve = true;
-
-    let cnv = document.getElementById('canvas');
-    cnv.style.cursor = "default";
   }
 }
 
@@ -237,15 +256,11 @@ function selectNextCurve() {
 function addPoints() {
   addPointsEnabled = true;
   
-  let cnv = document.getElementById('canvas');
-  cnv.style.cursor = "crosshair";
+  cursorType('crosshair');
 }
 
 function doneAddingPoints() {
   addPointsEnabled = false;
-
-  let cnv = document.getElementById('canvas');
-  cnv.style.cursor = "default";
 }
 
 function deletePoint() {

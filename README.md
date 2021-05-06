@@ -16,7 +16,7 @@ Click [here](https://bezier-curves.netlify.app/) to access the application.
   - [x] curves
 - [ ] interaction with the curves allowing to: 
   - [x] insert;
-  - [ ] modify;
+  - [x] modify;
   - [ ] delete control points.
 
 ## System requirements
@@ -25,4 +25,4 @@ Click [here](https://bezier-curves.netlify.app/) to access the application.
 - [x] the number of curve evaluations is arbitrary (user-specified);
 - [x] the number of curve control points is arbitrary;
 - [x] the system responds to changes in real time;
-- [ ] the system does not display crashes or memory overflow.
+- [x] the system does not display crashes or memory overflow.
