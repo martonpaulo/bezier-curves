@@ -80,6 +80,7 @@ function showPoints() {
 function showLines() {
   stroke('#3D3C3C');
   strokeWeight(2);
+
   for (let i = 0; i < points.length; i++)
     for (let j = 0; j < points[i].length - 1; j++)
       line(
@@ -105,7 +106,7 @@ function showCurves() {
   for (let k = 0; k < points.length; k++) {
     if (points[k].length > 2) {
       if (k === current) color = 'red';
-      else color = 'gray'
+      else color = '#666666'
       //Computando os pontos de controle
       for (let i = 0; i <= t ; i++)
         bPoints[i] = deCasteljau(k, i / t);

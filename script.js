@@ -129,12 +129,7 @@ function addButton(text, icon, func, side, checked = false) {
 
 
   // FIRST BUTTON ENABLED OR DISABLED
-  if (text === 'Done' && !(userMadeTheFirstAction && points[current].length > 0))
-    firstButtonActive = false;
-  else
-    firstButtonActive = true;
-  
-  if ((text === 'Done' || text === 'Create new') && addPointsEnabled)
+  if ((text === 'Done' && points[current].length < 2) || ((text === 'Done' || text === 'Create new') && addPointsEnabled))
     firstButtonActive = false;
   else
     firstButtonActive = true;
