@@ -9,6 +9,8 @@ let sketchHeight = 0;
 
 let started = false;
 
+let selectedPoint;
+
 class Point {
   constructor(x, y) {
     this.x = x;
@@ -99,8 +101,11 @@ function mouseClicked() {
     mouseX < sketchWidth - padding &&
     mouseY < sketchHeight - padding
   ) {
-    if (createNewEnabled || addPointsEnabled)
-      points[current].push(new Point(mouseX, mouseY));
+    if (createNewEnabled || addPointsEnabled) {
+      let p = new Point(mouseX, mouseY);
+      points[current].push(p);
+      selectedPoint = p;
+    }
   }
 }
 
@@ -119,10 +124,19 @@ function draw() {
 }
 
 function showPoints() {
-  stroke('#EC904C');
   strokeWeight(10);
+
   for (let i = 0; i < points.length; i++) {
     for (let p of points[i]) {
+
+      if (p.dragging || p == selectedPoint) {
+        stroke('black');
+        selectedPoint = p;
+
+      } else {
+        stroke('#EC904C');
+      }
+
       point(p.x, p.y);
       p.update();
 

@@ -7,8 +7,6 @@ let showLinesEnabled = true;
 let showCurvesEnabled = true;
 let addPointsEnabled = false;
 
-let pointSelected = false;
-
 let firstButtonActive = true;
 
 let userMadeTheFirstAction = false;
@@ -121,7 +119,7 @@ function displayButtons() {
   }
 
   // DELETE POINT
-  if (pointSelected) {
+  if (!createNewEnabled && selectedPoint != null && points[current].length > 3) {
     text = 'Delete point';
     icon = 'far fa-times-circle';
     func = 'deletePoint()';
@@ -201,6 +199,7 @@ function getInput() {
 
 function createNew() {
   createNewEnabled = true;
+  selectedPoint = null;
   
   cursorType('crosshair');
 
@@ -214,14 +213,13 @@ function createNew() {
 function clearAll() {
   points = [[]];
   current = 0;
+  selectedPoint = null;
 
   createNewEnabled = false;
   showPointsEnabled = true;
   showLinesEnabled = true;
   showCurvesEnabled = true;
   addPointsEnabled = false;
-
-  pointSelected = false;
 
   firstButtonActive = true;
 
@@ -251,6 +249,8 @@ function done() {
 
 function selectNextCurve() {
   current = (current + 1) % (points.length - 1);
+
+  selectedPoint = null;
 }
 
 function addPoints() {
@@ -264,7 +264,10 @@ function doneAddingPoints() {
 }
 
 function deletePoint() {
-  console.log('deletePoint()');
+  let index = points[current].indexOf(selectedPoint);
+  points[current].splice(index, 1);
+
+  selectedPoint = null;
 }
 
 function deleteCurve() {
