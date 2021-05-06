@@ -7,6 +7,8 @@ let showLinesEnabled = true;
 let showCurvesEnabled = true;
 let addPointsEnabled = false;
 
+let pointSelected = false;
+
 let firstButtonActive = true;
 
 let userMadeTheFirstAction = false;
@@ -107,6 +109,14 @@ function displayButtons() {
     addButton(text, icon, func, side);
   }
 
+  // DELETE POINT
+  if (pointSelected) {
+    text = 'Delete point';
+    icon = 'far fa-times-circle';
+    func = 'deletePoint()';
+    addButton(text, icon, func, side);
+  }
+
   // DELETE CURVE
   if (!createNewEnabled && userMadeTheFirstAction && points.length > 1 && !addPointsEnabled) {
     text = 'Delete curve';
@@ -189,6 +199,8 @@ function clearAll() {
   showCurvesEnabled = true;
   addPointsEnabled = false;
 
+  pointSelected = false;
+
   firstButtonActive = true;
 
   userCreatedTheFirstCurve = false;
@@ -214,7 +226,7 @@ function done() {
     userCreatedTheFirstCurve = true;
 
     let cnv = document.getElementById('canvas');
-    cnv.style.cursor = "pointer";
+    cnv.style.cursor = "default";
   }
 }
 
@@ -233,7 +245,11 @@ function doneAddingPoints() {
   addPointsEnabled = false;
 
   let cnv = document.getElementById('canvas');
-  cnv.style.cursor = "pointer";
+  cnv.style.cursor = "default";
+}
+
+function deletePoint() {
+  console.log('deletePoint()');
 }
 
 function deleteCurve() {

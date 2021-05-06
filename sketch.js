@@ -37,11 +37,6 @@ function keyPressed() {
 }
 
 function mouseClicked() {
-  
-  // console.log('Current:', current);
-  // console.log('Size:', points.length);
-  // console.log('');
-
   displayButtons();
 
   if (
