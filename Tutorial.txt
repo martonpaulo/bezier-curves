@@ -1,0 +1,12 @@
+Para criar uma curva, pressione o botão "Create new".
+Para limpar o quadro, aperte o botão "Clear all".
+Para esconder os pontos de controle, aperte o botão "Hide points".
+Para esconder as linhas entre os pontos de controle, pressione "Hide lines"
+Para esconder as curvas de Bezier, pressione "Hide curves".
+Para selecionar o número de avaliações, inserir o valor em "Eval number" e pressionar "Enter", no teclado.
+Para mudar a seleção das curvas, insira mais de uma curva e aperte o botão "Select next".
+Para adicionar pontos a uma curva, selecione a curva desejada e pressione "Add points".
+Para excluir pontos em uma curva, selecione a curva desejada, pressione o ponto almejado e aperte em "Delete point".
+Para deletar uma curva, selecione a curva almejada e pressione "Delete curve.
+Para mover um ponto, selecione a curva desejada, clique e aperte no ponto a ser modificado e mova-o para o lugar desejado.
+Para eliminar todas as curvas, pressione o botão "Clear all".
